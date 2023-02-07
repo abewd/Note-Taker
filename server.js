@@ -5,7 +5,7 @@ const html = require("./routes/homeRoutes");
 
 // Process environment port, this makes the existing port variable to 3001
 // Use this when deploying to heroku
-const PORT = process.env.port || 3001;
+const PORT = process.env.PORT || 3001;
 
 // Create Express instance
 const app = express();
