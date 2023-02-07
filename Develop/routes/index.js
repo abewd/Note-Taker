@@ -1,10 +1,10 @@
 const app = require("express").Router();
 
-// Import the notes router
+// Allow new constant to link to the notes router
 const notesRouter = require("./notes");
 
-// Mount the notes router at the /notes endpoint
+// Route notes using the const
 app.use("/notes", notesRouter);
 
-//export the Express app instance
+// Mapping the router export
 module.exports = app;
