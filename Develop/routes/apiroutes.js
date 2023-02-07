@@ -13,5 +13,10 @@ router.get("/notes", (req, res) => {
   console.log(db);
   return res.json(db);
 });
+// reuse code to rewrite into a file... 
+// this will be your saved function. check miniproject
+router.post(
+
+)
 
 module.exports = router;
