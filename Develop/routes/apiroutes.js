@@ -1,9 +1,10 @@
 const notes = require("express").Router();
 const fs = require("fs");
+// Remember to run npm i uuid for this, npm i didnt work
 const { v4: uuidv4 } = require("uuid");
 const { readFromFile, readAndAppend, writeToFile } = require("../db/fsUtil");
 
-// Route to handle GET request to retrieve all notes
+// Retrieve both index.html and notes.html
 notes.get("/", (req, res) => {
   // Read the data from the file
   readFromFile("db/db.json").then((data) => {
@@ -16,39 +17,36 @@ notes.get("/", (req, res) => {
 notes.post("/", (req, res) => {
   console.log(req.body);
 
-  // Destructure the incoming request body
   const { title, text } = req.body;
 
-  // Check if  t he request body is present
+  // Check if request is present
   if (req.body) {
-    // Create a new note obj
-    const newNote = {
+    const note = {
       title,
       text,
       id: uuidv4(),
     };
 
-    // Append the new note to the file
-    readAndAppend(newNote, "db/db.json");
+    // Append note
+    readAndAppend(note, "db/db.json");
     // Return a success message
     res.json(`Note added successfully 🚀`);
   } else {
-    // Return an error message if the request is not present
+    // Return an error message error present in request
     res.error("Error in adding note");
   }
 });
 
-// Function to delete sleceted notes
+// Function to delete selected notes
 notes.delete("/:id", (req, res) => {
-  // Read data from file
   readFromFile("db/db.json").then((data) => {
-    // Parse data
     let parsedData = JSON.parse(data);
-    // Filter the notes to exclude the one with the unique ID
+
+    // Exclude exclusive ID
     let newData = parsedData.filter((note) => note.id != req.params.id);
-    // Write the updated data to the new file
+    // Write new data
     writeToFile("db/db.json", newData);
-    // Return an empty JSON obj as the response
+    // Return an empty file
     res.json({});
   });
 });
